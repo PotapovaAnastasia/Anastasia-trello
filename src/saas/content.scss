@@ -1,0 +1,187 @@
+@import "variables.scss";
+
+.content {
+   @include flex-align-around;
+
+   width: 90%;
+   height: 580px;
+
+   border: 1px solid rgb(244, 205, 226);
+   border-radius: 20px;
+   box-shadow: 0 0px 5px $light-violet;
+
+   margin: 0 auto;
+   padding: 20px;
+}
+
+.block {
+   display: flex;
+   flex-direction: column;
+   border-collapse: collapse;
+
+   overflow-y: auto;
+   overflow-x: hidden;
+
+   flex: 0 0 30%;
+   height: 100%;
+
+   border: 1px solid rgb(244, 205, 226);
+   border-radius: 20px;
+   box-shadow: 0 11px 20px rgba(0, 0, 0, 0.15);
+
+   background-color: rgba(222, 179, 239, .3);
+
+   position: relative;
+
+   &__row {
+      flex: 1 1 auto;
+   }
+
+   &__top {
+      @include flex-align-between;
+
+      position: sticky;
+      top: 0;
+      left: 0;
+
+      z-index: 100;
+      
+      width: 100%;
+      height: 7vh;
+
+      padding: 0 20px;
+
+      border-radius: 15px;
+      background-color: $mid-violet; 
+      
+      color: $light-violet;
+      font-weight: 500;
+   }
+
+   &__list {
+      padding: 15px;
+      width: 100%;
+   }
+
+   &__row {
+      flex: 1 1 auto;
+   }
+
+   &__todo {
+      width: 100%;
+      height: 11rem;
+
+      margin-bottom: 10px;
+      padding: 15px;
+
+      border-radius: 20px;
+      background-color: rgba(234, 211, 243, 0.7);
+
+      display: flex;
+      flex-direction: column;
+
+      &-top {
+         @include flex-align-between;
+         margin-bottom: 10px;
+      }
+      
+      &-button {
+         background-color: $primary-violet;
+         opacity: 90%;
+         border-radius: 5px;
+         width: 3.5rem;
+         transition: background-color .2s linear;
+      
+         color: $light-violet;
+         font-size: 0.85rem;
+      
+         &:hover {
+            background-color: $mid-violet;
+         }
+      }
+
+      &-title {
+         color: $mid-violet;
+         line-height: 2.0;
+         font-size: 1.1rem;
+      }
+
+      &-text {
+         color: $mid-violet;
+         line-height: 1.1;
+         font-size: 0.9rem;
+         max-height: 48px;
+         overflow: hidden;
+      }
+
+      &-bottom {
+         @include flex-align-between;
+         font-size: 0.9rem;
+         color: $mid-violet;
+      }
+   }
+
+   &__button {
+      width: 100%;
+      min-height: 3rem;
+
+      position: sticky;
+      bottom: 0;
+      left: 0;
+
+      background-color: $primary-violet;
+      border-radius: 15px;
+      color: $light-violet;
+      font-weight: 600;
+      transition: background-color .2s linear;
+
+      &:hover {
+         background-color: $button-hover;
+      }
+   }   
+}
+
+.form-select {
+   background-color: $light-violet !important;
+   line-height: 1.6 !important;
+   opacity: 80% !important;
+   cursor: pointer;
+   transition: opacity .2s linear !important;
+   padding-top: 0 !important;
+   padding-bottom: 0 !important;
+
+   &:hover {
+      opacity: 90% !important;
+   }    
+}
+
+.modal-content {
+   background-color: rgba(238, 243, 246, 0.981) !important;
+   border: none !important;
+}
+
+.modal-header {
+   background: $modal-violet;
+   color: white !important;
+}
+
+.btn-close {
+   background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat !important;
+}
+
+.btn {
+   background-color: $mid-violet !important;
+   color: white !important;
+   transition: opacity .2s linear !important;
+
+   &:hover {
+         opacity: 90% !important;
+      }
+}
+
+.select-modal {
+   max-width: 200px;
+   height: 38px;
+   background-color: white  !important;
+   margin-right: 60px !important;
+}

@@ -1,0 +1,35 @@
+/*-------Variables------*/
+
+$primary-violet: rgb(121, 29, 109);
+$mid-violet: rgba(83, 28, 87, 1);
+$light-violet: #fcfafd;
+$modal-violet: rgba(64, 21, 79, 0.949);
+
+$primary-black: #222222;
+$header-back: rgb(30, 11, 38);
+$button-hover: rgb(99, 34, 103);
+
+/*-------/Variables------*/
+
+
+/*-------Mixins------*/
+
+@mixin flex-align-between {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
+@mixin flex-align-evenly {
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+}
+
+@mixin flex-align-around {
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+}
+
+/*-------/Mixins------*/
