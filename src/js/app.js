@@ -31,16 +31,16 @@ const blockList2Element = $('#list2')
 const blockList3Element = $('#list3')
 
 
+window.addEventListener('beforeunload', handleBeforeunload)
+window.addEventListener('DOMContentLoaded', handleDOMLoadedStorage)
 window.addEventListener('DOMContentLoaded', handleDOMLoadedClock)
 window.addEventListener('DOMContentLoaded', handleDomLoadedUsers)
-window.addEventListener('DOMContentLoaded', handleDOMLoadedStorage)
-window.addEventListener('beforeunload', handleBeforeunload)
 
 addFormElement.addEventListener('submit', handleSubmitAddForm)
 
-buttonDeleteAllElement.addEventListener('click', handleClickDeleteAll)
 buttonCancelAddForm.addEventListener('click', handleClickCloseAddForm)
 buttonCloseAddForm.addEventListener('click', handleClickCloseAddForm)
+buttonDeleteAllElement.addEventListener('click', handleClickDeleteAll)
 
 blockList1Element.addEventListener('click', handleClickBlock)
 blockList2Element.addEventListener('click', handleClickBlock)
@@ -61,29 +61,23 @@ function handleBeforeunload () {
 }
 
 function handleDOMLoadedStorage () {
-   if (localStorage.getItem('todos') !== null) {
-      const json = localStorage.getItem('todos')
-      const parse = JSON.parse(json)
-
-      parse.forEach(item => todos.push(item))
-      render(1, todos)
+   const getFromLocalStorage = (name) => {
+      return JSON.parse(localStorage.getItem(name))
    }
 
-   if (localStorage.getItem('todos2') !== null) {
-      const json2 = localStorage.getItem('todos2')
-      const parse2 = JSON.parse(json2)
+   todos = getFromLocalStorage('todos') ?? []
+   todos2 = getFromLocalStorage('todos2') ?? []
+   todos3 = getFromLocalStorage('todos3') ?? []
 
-      parse2.forEach(item => todos2.push(item))
-      render(2, todos2)
-   }
+   renderAll()
+}
 
-   if (localStorage.getItem('todos3') !== null) {
-      const json3 = localStorage.getItem('todos3')
-      const parse3 = JSON.parse(json3)
+async function handleDomLoadedUsers() {
+   const response = await fetch('https://jsonplaceholder.typicode.com/users')
+   const data = await response.json()
 
-      parse3.forEach(item => todos3.push(item))
-      render(3, todos3)
-   }
+   users = data.map(item => item.username)
+   fillSelectNames()
 }
 
 function handleSubmitAddForm (event) {
@@ -103,20 +97,14 @@ function handleClickCloseAddForm () {
    addFormElement.reset()
 }
 
-async function handleDomLoadedUsers () {
-   const response = await fetch('https://jsonplaceholder.typicode.com/users')
-   const data = await response.json()
-
-   users = data.map(item => item.username)
-   fetchNamesForSelect()
-}
-
 function handleClickBlock (event) {
    const target = event.target
-   const curTarget = event.currentTarget 
+   const curTarget = event.currentTarget
    const role = target.dataset.role
+
    const todoElement = target.closest('.block__item')
    const id = todoElement.id
+
    const arr = (curTarget.id == 'list1') ? todos : (curTarget.id == 'list2') ? todos2 : todos3 
 
    if (role == 'removeTodo') {
@@ -136,6 +124,7 @@ function handleClickBlock (event) {
          if (item.id == id) {
             inputEditElement.value = item.title
             textareaEditElement.value = item.description
+            
             users.forEach((elem, index) => {
                if (elem == item.user) {
                   optionsElement[index + 1].setAttribute('selected', 'selected')
@@ -211,13 +200,13 @@ function handleChangeSelectSort (event) {
    }
 }
 
-function cleanContainerHTML(block) {
+function cleanContainerHTML (block) {
    block == 1 ? blockList1Element.innerHTML = '' 
       : block == 2 ? blockList2Element.innerHTML = '' 
       : blockList3Element.innerHTML = ''
 }
 
-function fetchNamesForSelect () {
+function fillSelectNames () {
    for (let item of selectNamesElements) {
       users.forEach(elem => item.innerHTML += `<option value=${elem}>${elem}</option>`)
    }

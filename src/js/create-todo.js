@@ -1,5 +1,5 @@
 function createTemplateTodo({ title, description, user, date, id }, block) {
-   const color = block == 1 ? '#ead3f3b3' : block == 2 ? '#ebe2e2c2' : '#dfffe2b3'
+   const color = (block == 1) ? '#ead3f3b3' : (block == 2) ? '#ebe2e2c2' : '#dfffe2b3'
    return `
       <div class="block__todo block__item" style="background-color: ${color};" id="${id}"> 
          <div class="block__row">
@@ -32,12 +32,12 @@ function createTemplateTodo({ title, description, user, date, id }, block) {
 
 class Todo {
    constructor (title, description, user) {
-   this.title = title
-   this.description = description
-   this.user = user
-   this.createdAt = new Date()
-   this.id = this.createdAt.getTime()
-   this.date = getDateInfo()
+      this.title = title
+      this.description = description
+      this.user = user
+      this.createdAt = new Date()
+      this.id = this.createdAt.getTime()
+      this.date = getDateInfo()
    }
 }
 
