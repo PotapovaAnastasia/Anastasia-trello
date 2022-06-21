@@ -74,7 +74,7 @@ async function handleDomLoadedUsers() {
    const response = await fetch('https://jsonplaceholder.typicode.com/users')
    const data = await response.json()
 
-   users = data.map(item => item.username)
+   users = data.map((item) => item.username)
    fillSelectNames()
 }
 
@@ -169,24 +169,38 @@ function handleChangeSelectSort (event) {
    const target = event.target
    const curTarget = event.currentTarget
    const value = target.value
+   
+   const arr = (curTarget.id == 'block1Top') ? todos : (curTarget.id == 'block2Top') ? todos2 : todos3
 
-   if (target.tagName == 'SELECT') {
-      const arr = (curTarget.id == 'block1Top') ? todos : (curTarget.id == 'block2Top') ? todos2 : todos3
+   if (value == 1) {
+      arr.sort((a, b) => b.id - a.id)  // Сортирует по принципу 'сначала новые' 
+   } else if (value == 2 || value == 4) {
+      arr.sort((a, b) => a.id - b.id)  // Сортирует по принципу 'сначала старые' 
+   } else if (value == 3) {
+      arr.sort((a, b) => (b.user < a.user) ? 1 : -1)  // Сортирует по имени исполнителя
+   }
+   renderAll()  
+}
 
-      if (arr.length && value == 1) {
-         arr.sort((a, b) => b.id - a.id) 
-      } else if (arr.length && value == 2) {
-         arr.sort((a, b) => a.id - b.id)
-      } else if (arr.length && value == 3) {
-         arr.sort((a, b) => (b.user < a.user) ? 1 : -1)
-      }
-      renderAll()
+function cleanContainerHTML (block) {
+   if (block == 1) {
+      blockList1Element.innerHTML = '' 
+   } else if (block == 2) {
+      blockList2Element.innerHTML = ''
+   } else {
+      blockList3Element.innerHTML = '' 
+   }
+}
+
+function fillSelectNames () {
+   for (let select of selectNamesElements) {
+      users.forEach((name) => select.innerHTML += `<option value=${name}>${name}</option>`)
    }
 }
 
 function fillEditFormAccordingTodo(arr, id) {
    const optionsNameElement = [...selectNameEditElement.querySelectorAll('option')]
-   optionsNameElement.forEach(option => option.removeAttribute('selected'))
+   optionsNameElement.forEach((option) => option.removeAttribute('selected'))
 
    arr.forEach((todo) => {
       if (todo.id == id) {
@@ -202,32 +216,24 @@ function fillEditFormAccordingTodo(arr, id) {
    })
 }
 
-function cleanContainerHTML (block) {
-   block == 1 ? blockList1Element.innerHTML = '' 
-      : block == 2 ? blockList2Element.innerHTML = '' 
-      : blockList3Element.innerHTML = ''
-}
-
-function fillSelectNames () {
-   for (let item of selectNamesElements) {
-      users.forEach(elem => item.innerHTML += `<option value=${elem}>${elem}</option>`)
-   }
+function fillCounter (block, arr) {
+   const counterElement = $(`.block${block}__top-counter`)
+   counterElement.innerHTML = arr.length
 }
 
 function render(block, arr) {
    cleanContainerHTML(block)
    fillCounter(block, arr)
 
-   arr.forEach(item => {
-      block == 1 ? blockList1Element.innerHTML += createTemplateTodo(item, 1) 
-         : block == 2 ? blockList2Element.innerHTML += createTemplateTodo(item, 2) 
-         : blockList3Element.innerHTML += createTemplateTodo(item, 3)
+   arr.forEach((todo) => {
+      if (block == 1) {
+         blockList1Element.innerHTML += createTemplateTodo(todo, 1) 
+      }  else if (block == 2) {
+         blockList2Element.innerHTML += createTemplateTodo(todo, 2) 
+      } else {
+         blockList3Element.innerHTML += createTemplateTodo(todo, 3)
+      } 
    })
-}
-
-function fillCounter (block, arr) {
-   const counterElement = $(`.block${block}__top-counter`)
-   counterElement.innerHTML = arr.length
 }
 
 function renderAll () {
