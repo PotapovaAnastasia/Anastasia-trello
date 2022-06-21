@@ -7,16 +7,15 @@ let todos = []
 let todos2 = []
 let todos3 = []
 
-const buttonCancelAddForm = $('#buttonCancelAddForm')
-const buttonCloseAddForm = $('#buttonCloseAddForm')
+const buttonAddTodo = $('#buttonAdd')
 const buttonDeleteAllElement = $('#buttonDeleteAll')
 const buttonEditModalElement = $('#buttonEdit')
 
+const formAddElement = $('#addForm')
 const inputTitleAddElement = $('#titleAdd')
 const inputDescriptionAddElement = $('#descriptionAdd')
 const inputEditElement = $('#titleEdit')
 const textareaEditElement = $('#descriptionEdit')
-const addFormElement = $('#addForm')
 
 const selectNamesElements = [...$$('.modal__select-user')]
 const selectNameAddElement = $('#nameAdd')
@@ -36,10 +35,9 @@ window.addEventListener('DOMContentLoaded', handleDOMLoadedStorage)
 window.addEventListener('DOMContentLoaded', handleDOMLoadedClock)
 window.addEventListener('DOMContentLoaded', handleDomLoadedUsers)
 
-addFormElement.addEventListener('submit', handleSubmitAddForm)
+formAddElement.addEventListener('submit', handleSubmitAddForm)
 
-buttonCancelAddForm.addEventListener('click', handleClickCloseAddForm)
-buttonCloseAddForm.addEventListener('click', handleClickCloseAddForm)
+buttonAddTodo.addEventListener('click', handleClickButtonAddTodo)
 buttonDeleteAllElement.addEventListener('click', handleClickDeleteAll)
 
 blockList1Element.addEventListener('click', handleClickBlock)
@@ -89,12 +87,12 @@ function handleSubmitAddForm (event) {
 
    todos.push(new Todo(title, description, name))
    
-   addFormElement.reset()
+   formAddElement.reset()
    render(1, todos)
 }
 
-function handleClickCloseAddForm () {
-   addFormElement.reset()
+function handleClickButtonAddTodo () {
+   formAddElement.reset()
 }
 
 function handleClickBlock (event) {
