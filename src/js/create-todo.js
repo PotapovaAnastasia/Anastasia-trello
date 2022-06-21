@@ -2,8 +2,11 @@ import { getRightTimeFormat } from './clock.js'
 
 // ---- Шаблон создания todo. Передается объект свойств todo, а также номер блока (от 1 до 3) для определения цвета фона todo
 
-function createTemplateTodo({ title, description, user, date, id }, block) {
+function createTemplateTodo({ title, description, user, date, id, priority }, block) {
    const color = (block == 1) ? '#ead3f3b3' : (block == 2) ? '#ebe2e2c2' : '#dfffe2b3'
+   const star = '<i class="fa-solid fa-star"></i>'
+   const priorityStars = (priority == 1) ? (star + star + star) : (priority == 2) ? (star + star) : star
+
    return `
       <div class="block__todo block__item" style="background-color: ${color};" id="${id}"> 
          <div class="block__row">
@@ -21,6 +24,7 @@ function createTemplateTodo({ title, description, user, date, id }, block) {
                <button class="block__todo-button button-delete" data-role="removeTodo">Delete</button>
             </div>
 
+            <div class="block__todo-priority" id="priority">${priorityStars}</div>
             <div class="block__todo-title">${title}</div>
             <div class="block__todo-text">${description}</div>
          </div>
@@ -37,10 +41,11 @@ function createTemplateTodo({ title, description, user, date, id }, block) {
 // --- Конструктор todo ---
 
 class Todo {
-   constructor (title, description, user) {
+   constructor (title, description, user, priority) {
       this.title = title
       this.description = description
       this.user = user
+      this.priority = priority
       this.createdAt = new Date()
       this.id = this.createdAt.getTime()
       this.date = getDateInfo()

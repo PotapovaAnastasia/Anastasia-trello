@@ -20,6 +20,8 @@ const textareaEditElement = $('#descriptionEdit')
 const selectNamesElements = [...$$('.modal__select-user')]
 const selectNameAddElement = $('#nameAdd')
 const selectNameEditElement = $('#selectEdit')
+const selectPriorityElement = $('#selectPriority')
+const selectPriorityEditElement = $('#selectPriorityEdit')
 
 const block1TopElement = $('#block1Top')
 const block2TopElement = $('#block2Top')
@@ -93,8 +95,9 @@ function handleSubmitAddForm (event) {
    const title = inputTitleAddElement.value
    const description = inputDescriptionAddElement.value
    const name = selectNameAddElement.value
+   const priority = selectPriorityElement.value
 
-   todos.push(new Todo(title, description, name))
+   todos.push(new Todo(title, description, name, priority))
    
    formAddElement.reset()
    render(1, todos)
@@ -137,6 +140,7 @@ function handleClickBlock (event) {
                todo.title = inputEditElement.value
                todo.description = textareaEditElement.value
                todo.user = selectNameEditElement.value
+               todo.priority = selectPriorityEditElement.value
             }
          })        
          renderAll()
@@ -195,10 +199,12 @@ function handleChangeSelectSort (event) {
 
    if (value == 1) {
       arr.sort((a, b) => b.id - a.id)  // ----- Сортирует по принципу 'сначала новые' ---- 
-   } else if (value == 2 || value == 4) {
+   } else if (value == 2 || value == 5) {
       arr.sort((a, b) => a.id - b.id)  // ----- Сортирует по принципу 'сначала старые' ----
    } else if (value == 3) {
       arr.sort((a, b) => (b.user < a.user) ? 1 : -1)  // ---- Сортирует по имени исполнителя ----
+   } else if (value == 4) {
+      arr.sort((a, b) => (a.priority > b.priority) ? 1 : -1) // ---- Сортирует по приоритету ----
    }
    renderAll()  
 }
@@ -226,19 +232,12 @@ function fillSelectNames () {
 // ------- Функция заполняет форму 'Edit' данными из изменяемой todo ------
 
 function fillEditFormAccordingTodo(arr, id) {
-   const optionsNameElement = [...selectNameEditElement.querySelectorAll('option')]
-   optionsNameElement.forEach((option) => option.removeAttribute('selected'))
-
    arr.forEach((todo) => {
       if (todo.id == id) {
          inputEditElement.value = todo.title
          textareaEditElement.value = todo.description
-
-         users.forEach((name, index) => {
-            if (name == todo.user) {
-               optionsNameElement[index + 1].setAttribute('selected', 'selected')
-            }
-         })
+         selectPriorityEditElement.value = todo.priority
+         selectNameEditElement.value = todo.user
       }
    })
 }
