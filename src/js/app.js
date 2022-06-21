@@ -102,12 +102,11 @@ function handleClickBlock (event) {
 
    const todoElement = target.closest('.block__item')
    const id = todoElement.id
-
    const arr = (curTarget.id == 'list1') ? todos : (curTarget.id == 'list2') ? todos2 : todos3 
 
    if (role == 'removeTodo') {
-      arr.forEach((item, index) => {
-         if (item.id == id) {
+      arr.forEach((todo, index) => {
+         if (todo.id == id) {
             arr.splice(index, 1)
             renderAll()
          }
@@ -115,30 +114,16 @@ function handleClickBlock (event) {
    }
 
    if (role == 'editTodo') {
-      const optionsElement = [...selectNameEditElement.querySelectorAll('option')]
-      optionsElement.forEach(item => item.removeAttribute('selected'))
-      
-      arr.forEach((item) => {
-         if (item.id == id) {
-            inputEditElement.value = item.title
-            textareaEditElement.value = item.description
-            
-            users.forEach((elem, index) => {
-               if (elem == item.user) {
-                  optionsElement[index + 1].setAttribute('selected', 'selected')
-               }
-            })
-         }
-      })
+      fillEditFormAccordingTodo(arr, id)
 
       buttonEditModalElement.onclick = function () {
-         arr.forEach((item) => {
-            if (item.id == id) {
-               item.title = inputEditElement.value
-               item.description = textareaEditElement.value
-               item.user = selectNameEditElement.value
+         arr.forEach((todo) => {
+            if (todo.id == id) {
+               todo.title = inputEditElement.value
+               todo.description = textareaEditElement.value
+               todo.user = selectNameEditElement.value
             }
-         })
+         })        
          renderAll()
       }
    }
@@ -147,31 +132,32 @@ function handleClickBlock (event) {
 function handleChangeSelectProgress (event) {
    const target = event.target
    const curTarget = event.currentTarget
-   const value = target.value 
-    
-   if (target.tagName == 'SELECT') {    
-      if (curTarget.id[4] == value) return 0   // Если выбирается перемещение в блок, в котором элемент и так находится, ничего не происходит
-      
-      if (value == 2 && todos2.length >= 3) {   // В In Progress > 6 не добавлять, показать модальное окно
-         const myModal = new bootstrap.Modal(document.getElementById('only6Modal'))
-         myModal.show()
-         return 0
-      }
+   const value = target.value
 
-      const todoElement = target.closest('.block__item')
-      const id = todoElement.id
-      const arr = (curTarget.id == 'list1') ? todos : (curTarget.id == 'list2') ? todos2 : todos3            
+   // ----- Если выбирается перемещение в блок, в котором элемент и так находится, остановить выполнение функции
+   if (curTarget.id[4] == value) return 0
 
-      arr.forEach((item, index) => {
-         if (item.id == id) {
-            (value == 2) ? todos2 = [...todos2, ...arr.slice(index, index + 1)] :
-               (value == 3) ? todos3 = [...todos3, ...arr.slice(index, index + 1)] :
-                  todos = [...todos, ...arr.slice(index, index + 1)]
-            arr.splice(index, 1)
-            renderAll()
-         }
-      })
+   // ----- В 'In Progress' > 3 не добавлять, показать модальное окно   
+   if (value == 2 && todos2.length >= 3) {   
+      const myModal = new bootstrap.Modal(document.getElementById('only6Modal'))
+      myModal.show()
+      return 0
    }
+
+   // ----- Удаляем 'todo' из текущего массива (находим по id) и вставляем в нужный
+   const todoElement = target.closest('.block__item')
+   const id = todoElement.id
+
+   const arrCurrent = (curTarget.id == 'list1') ? todos : (curTarget.id == 'list2') ? todos2 : todos3
+   const arrDestination = (value == 2) ? todos2 : (value == 3) ? todos3 : todos            
+
+   arrCurrent.forEach((todo, index) => {
+      if (todo.id == id) {
+         arrDestination.push(arrCurrent.slice(index, index + 1)[0])
+         arrCurrent.splice(index, 1)
+         renderAll()
+      }
+   })  
 }
 
 function handleClickDeleteAll () {
@@ -196,6 +182,24 @@ function handleChangeSelectSort (event) {
       }
       renderAll()
    }
+}
+
+function fillEditFormAccordingTodo(arr, id) {
+   const optionsNameElement = [...selectNameEditElement.querySelectorAll('option')]
+   optionsNameElement.forEach(option => option.removeAttribute('selected'))
+
+   arr.forEach((todo) => {
+      if (todo.id == id) {
+         inputEditElement.value = todo.title
+         textareaEditElement.value = todo.description
+
+         users.forEach((name, index) => {
+            if (name == todo.user) {
+               optionsNameElement[index + 1].setAttribute('selected', 'selected')
+            }
+         })
+      }
+   })
 }
 
 function cleanContainerHTML (block) {
