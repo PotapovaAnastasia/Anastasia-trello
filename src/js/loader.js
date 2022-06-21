@@ -1,3 +1,5 @@
+// --- Запускаем loader ---
+
 document.body.onload = function () {
    setTimeout(() => {
       const preloader = document.getElementById('page-preloader');

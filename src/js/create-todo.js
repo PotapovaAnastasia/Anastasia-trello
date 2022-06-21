@@ -1,3 +1,7 @@
+import { getRightTimeFormat } from './clock.js'
+
+// ---- Шаблон создания todo. Передается объект свойств todo, а также номер блока (от 1 до 3) для определения цвета фона todo
+
 function createTemplateTodo({ title, description, user, date, id }, block) {
    const color = (block == 1) ? '#ead3f3b3' : (block == 2) ? '#ebe2e2c2' : '#dfffe2b3'
    return `
@@ -30,6 +34,8 @@ function createTemplateTodo({ title, description, user, date, id }, block) {
    `
 }
 
+// --- Конструктор todo ---
+
 class Todo {
    constructor (title, description, user) {
       this.title = title
@@ -41,22 +47,17 @@ class Todo {
    }
 }
 
+// --- Получаем время и дату в привычном формате
+
 function getDateInfo() {
    const createdAt = new Date()
    const hours = createdAt.getHours()
-   const minutes = getRightDateFormat(createdAt.getMinutes())
-   const day = getRightDateFormat(createdAt.getDate())
-   const month = getRightDateFormat(createdAt.getMonth() + 1)
+   const minutes = getRightTimeFormat(createdAt.getMinutes())
+   const day = getRightTimeFormat(createdAt.getDate())
+   const month = getRightTimeFormat(createdAt.getMonth() + 1)
    const year = createdAt.getFullYear()
 
    return `${hours}:${minutes}  ${day}.${month}.${year}`
-}
-
-function getRightDateFormat(number) {
-   if (number >= 10) {
-      return number
-   }
-   return '0' + number
 }
 
 export { createTemplateTodo, Todo }
