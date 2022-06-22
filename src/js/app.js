@@ -90,28 +90,29 @@ async function handleDomLoadedUsers() {
 // ------- Обрабатываем 'submit' формы по добавлению todo в массив, запускаем отрисовщик --------
 
 function handleSubmitAddForm (event) {
+   event.preventDefault()
+
    if (!formAddElement.checkValidity()) {   // --- Если валидация не прошла, включить кастомные стили. Форма не отправляется ----
-      event.preventDefault()
       event.stopPropagation()
       formAddElement.classList.add('was-valid')
       return 0
    } 
-
+   
    const title = inputTitleAddElement.value
    const description = inputDescriptionAddElement.value
    const name = selectNameAddElement.value
    const priority = selectPriorityElement.value
 
    todos.push(new Todo(title, description, name, priority))
-   
+
+   cleanAddForm()
    render(1, todos)
 }
 
 // ------- Очищаем форму добавления todo при каждом её открытии  ---------
 
 function handleClickButtonAddTodo () {
-   formAddElement.reset()
-   formAddElement.classList.remove('was-valid')
+   cleanAddForm()
 }
 
 // ------- Обрабатываем событие 'click' на каждом из 3-х блоков с todo  ---------
@@ -252,6 +253,13 @@ function fillEditFormAccordingTodo(arr, id) {
 function fillCounter (block, arr) {
    const counterElement = $(`.block${block}__top-counter`)
    counterElement.innerHTML = arr.length
+}
+
+// ------- Очищает форму ------
+
+function cleanAddForm () {
+   formAddElement.reset()
+   formAddElement.classList.remove('was-valid')
 }
 
 // ------- Рендер отдельного блока. Передается номер блока (от 1 до 3) и соотв-й массив ------

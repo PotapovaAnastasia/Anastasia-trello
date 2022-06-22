@@ -1,4 +1,4 @@
-// --- Запускаем loader ---
+// --- Скрываем loader ---
 
 document.body.onload = function () {
    setTimeout(() => {
@@ -6,5 +6,5 @@ document.body.onload = function () {
       if (!preloader.classList.contains('done')) {
          preloader.classList.add('done');
       }
-   }, 1000);
+   }, 500);
 }
