@@ -1,12 +1,22 @@
 /*-------Variables------*/
 
+$block-border: rgb(244, 205, 226);
+$block-shadow: rgba(0, 0, 0, 0.15);
+$block-background: rgba(222, 179, 239, .3);
+
+$modal-background: rgba(238, 243, 246, 0.981);
+$modal-invalid: rgb(232, 84, 84);
+
+$header-shadow: rgba(219, 68, 214, 0.471);
+$header-back: rgb(30, 11, 38);
+
 $primary-violet: rgb(121, 29, 109);
 $mid-violet: rgba(83, 28, 87, 1);
 $light-violet: #fcfafd;
 $modal-violet: rgba(64, 21, 79, 0.949);
 
 $primary-black: #222222;
-$header-back: rgb(30, 11, 38);
+
 $button-hover: rgb(99, 34, 103);
 
 /*-------/Variables------*/

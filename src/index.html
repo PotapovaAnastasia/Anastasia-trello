@@ -78,6 +78,8 @@
                            <option value="1">Start new</option>
                            <option value="2">Start old</option>
                            <option value="3">Name</option>
+                           <option value="4">Priority</option>
+                           <option value="5">Default</option>
                         </select>
                      </div>
                      <div class="block2__top-counter">0</div>
@@ -98,6 +100,8 @@
                            <option value="1">Start new</option>
                            <option value="2">Start old</option>
                            <option value="3">Name</option>
+                           <option value="4">Priority</option>
+                           <option value="5">Default</option>
                         </select>
                      </div>
                      <div class="block3__top-counter">0</div>
@@ -121,7 +125,7 @@
                <button type="button" id="buttonCloseAddForm" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-               <form id="addForm">
+               <form id="addForm" novalidate>
                   <div class="mb-3">
                      <label for="recipient-name1" class="col-form-label">Title</label>
                      <input type="text" id="titleAdd" required class="form-control" id="recipient-name1">
@@ -135,13 +139,13 @@
                         <option selected value="">Name</option>
                      </select>
                      <select required class="form-select select-modal modal-priority" id="selectPriority">
-                        <option selected>Priority</option>
+                        <option selected value="">Priority</option>
                         <option value="1">High</option>
                         <option value="2">Middle</option>
                         <option value="3">Low</option>
                      </select>
                      <button type="button" id="buttonCancelAddForm" class="btn" data-bs-dismiss="modal">Cancel</button>
-                     <button type="submit" id="buttonSubmitAddForm" class="btn" data-bs-dismiss="modal">Confirm</button>
+                     <button type="submit" id="buttonSubmitAddForm" class="btn">Confirm</button>
                </form>
             </div>
          </div>

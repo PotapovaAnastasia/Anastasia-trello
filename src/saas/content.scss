@@ -6,7 +6,7 @@
    width: 90%;
    height: 580px;
 
-   border: 1px solid rgb(244, 205, 226);
+   border: 1px solid $block-border;
    border-radius: 20px;
    box-shadow: 0 0px 5px $light-violet;
 
@@ -25,11 +25,11 @@
    flex: 0 0 30%;
    height: 100%;
 
-   border: 1px solid rgb(244, 205, 226);
+   border: 1px solid $block-border;
    border-radius: 20px;
-   box-shadow: 0 11px 20px rgba(0, 0, 0, 0.15);
+   box-shadow: 0 11px 20px $block-shadow;
 
-   background-color: rgba(222, 179, 239, .3);
+   background-color: $block-background;
 
    position: relative;
 
@@ -75,7 +75,6 @@
       padding: 15px;
 
       border-radius: 20px;
-      background-color: rgba(234, 211, 243, 0.7);
 
       display: flex;
       flex-direction: column;
@@ -150,3 +149,4 @@
 .block__todo-priority {
    text-align: end;
 }
+

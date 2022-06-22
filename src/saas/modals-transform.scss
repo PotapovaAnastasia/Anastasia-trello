@@ -19,7 +19,7 @@
 }
 
 .modal-content {
-   background-color: rgba(238, 243, 246, 0.981) !important;
+   background-color: $modal-background !important;
    border: none !important;
 }
 
@@ -70,4 +70,19 @@
 
 .modal-footer-edit {
    margin-bottom: 15px;
+}
+
+// --- Валидация формы добавления задач
+
+.was-valid input:invalid {
+   border: 2px dotted $modal-invalid;
+
+}
+
+.was-valid textarea:invalid {
+   border: 2px dotted $modal-invalid;
+}
+
+.was-valid select:invalid {
+   border: 2px dotted $modal-invalid;
 }

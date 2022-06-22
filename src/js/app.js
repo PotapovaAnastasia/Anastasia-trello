@@ -37,7 +37,7 @@ window.addEventListener('DOMContentLoaded', handleDOMLoadedStorage)
 window.addEventListener('DOMContentLoaded', handleDOMLoadedClock)
 window.addEventListener('DOMContentLoaded', handleDomLoadedUsers)
 
-formAddElement.addEventListener('submit', handleSubmitAddForm)
+formAddElement.addEventListener('submit', handleSubmitAddForm, false)
 
 buttonAddTodo.addEventListener('click', handleClickButtonAddTodo)
 buttonDeleteAllElement.addEventListener('click', handleClickDeleteAll)
@@ -90,7 +90,12 @@ async function handleDomLoadedUsers() {
 // ------- Обрабатываем 'submit' формы по добавлению todo в массив, запускаем отрисовщик --------
 
 function handleSubmitAddForm (event) {
-   event.preventDefault()
+   if (!formAddElement.checkValidity()) {   // --- Если валидация не прошла, включить кастомные стили. Форма не отправляется ----
+      event.preventDefault()
+      event.stopPropagation()
+      formAddElement.classList.add('was-valid')
+      return 0
+   } 
 
    const title = inputTitleAddElement.value
    const description = inputDescriptionAddElement.value
@@ -99,7 +104,6 @@ function handleSubmitAddForm (event) {
 
    todos.push(new Todo(title, description, name, priority))
    
-   formAddElement.reset()
    render(1, todos)
 }
 
@@ -107,6 +111,7 @@ function handleSubmitAddForm (event) {
 
 function handleClickButtonAddTodo () {
    formAddElement.reset()
+   formAddElement.classList.remove('was-valid')
 }
 
 // ------- Обрабатываем событие 'click' на каждом из 3-х блоков с todo  ---------
